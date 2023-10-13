@@ -1,0 +1,33 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/*
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# Build output
+/build/
+/dist/
+
+# Environment variables and configuration
+.env
+config.js
+
+# Dependencies (if you're using Yarn)
+yarn.lock
+
+# OS-generated files
+Thumbs.db
+
+# Miscellaneous
+*.swp

@@ -1,0 +1,61 @@
+
+<%- include("parts/header") %>
+<%- include("parts/sidebar") %>
+
+<div class="con profile text-center">
+
+        <div class="main-info">
+            <img src="/<%= userImage %>" alt="">
+            <h1><%= username %></h1>
+        </div>
+        <span class="line"></span>
+        <div class="idcopy">
+            <p class="m-0">ID : <span id="userId"><%= id %></span></p>
+            <button class="btn btn-dark copyBtn">Copy ID</button>
+        </div>
+        
+    </div>
+    <p class="copiedDone alert alert-success not-visible" id="done"> Copied To Clipboard<i class="fa-solid fa-check"></i></p>
+
+    <div class="line"></div>
+
+    <% if(friendRequests.length == 0){ %>
+        <div class="con friend-requests text-center mt-3" id="noFriendRequest">
+              <p class="alert alert-danger">There's No New Friend Request</p>
+        </div>
+        <% }else{ %>
+            <div class="con friend-requests mt-3" id="friendRequests">
+                  <p class="alert alert-success">Friends Request :</p>
+                  
+                  <% for(let request of friendRequests){ %>
+                    <a href="/profile/<%= request.id %>">
+                    <div class="profile text-center mt-3 w-100">
+                        <div class="main-info">
+                                    <img src="/<%= request.image %>" alt="">
+                                    <div style="flex-basis:50%; text-align: left;">
+                                        <h1 class="text-capitalize"><%= request.username %></h1>
+                                    </div>
+                                </div>
+                                <form action="" class="actions" method="POST">
+                                    <input type="hidden" name="isProfileRequests" value="true">
+                                    <input type="hidden" name="myData" value="<%= JSON.stringify(myData) %>">
+                                    <input type="hidden" name="userData" value="<%= JSON.stringify(request) %>">
+                                    
+                                    <input type="submit" class="btn" value="Accept" formaction="/friend/accept">
+                                    <input type="submit" class="btn reject" value="Reject" formaction="/friend/reject">
+                                </form>
+                            </div>
+                        </a>
+                    <% } %>
+                </div>
+            <% } %>
+
+<%- include("parts/scripts") %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets/init.js"></script>
+<% if(connectIo){%>
+    <input type="hidden" id="connectIo" value="<%= connectIo %>" class="disappeared">
+    <script src="/js/sockets/friend.js"></script>
+<% } %>
+</body>
+</html>

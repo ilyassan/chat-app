@@ -1,0 +1,115 @@
+
+<%- include("parts/header") %>
+<%- include("parts/sidebar") %>
+
+<div class="container text-center">
+    <div class="user-search m-auto">
+
+    <div class="search w-100">
+        <h1 class="text-white find-user-title">Find user by username or ID</h1>
+
+    <form action="/profile/search" class="formStyle m-auto" method="POST">
+
+        <div class="form-group my-4 mb-3 w-100">
+            <div class="d-flex justify-content-between align-items-center gap-4">
+                <input type="text" class="form-control searchUser" name="idOrName" placeholder="ID : " maxlength="35">
+                <% if(connectIo){%><input type="hidden" name="chatId" value="<%= JSON.parse(connectIo).chatId %>"><% } %>
+                <span class="btn btn-dark pasteBtn">Paste</span>
+            </div>
+            
+            <% if(validationError){ %>
+                <p class="alert alert-danger p-1 mt-3"><%= validationError.msg %></p>
+                <% } %>
+            </div>
+            
+            <input type="submit" class="btn btn-dark mb-3 searchBtn" value="Search">
+            
+        </form>
+    </div>
+
+    <%if(authError){ %>
+        <% if(authError.length > 8){ %>
+            <p class="alert alert-danger w-75 text-center mx-auto mt-5">No User Found With ID: <%= authError %></p>
+            <% }else{ %>
+                <p class="alert alert-danger w-75 text-center mx-auto mt-5">No User Found With Username: <%= authError %></p>
+                <% } %>
+    
+            <% } %>
+
+
+
+            <% if(found){ %>
+                <div class="profile text-center mt-4 w-100">
+            
+                    <div class="main-info">
+                        <img src="/<%= userData.image %>" alt="">
+                        <h1><%= userData.username %></h1>
+                    </div>
+
+                    <span class="line"></span>
+                    <% if(!isOwner){ %>
+
+                        <form action="" class="actions" method="POST">
+
+                            <input type="hidden" name="myData" value="<%= JSON.stringify(myData) %>">
+                            <input type="hidden" name="userData" value="<%= JSON.stringify(userData) %>">
+                            
+                            <% if(isFriend){ %>
+                                
+                                <input type="hidden" id="chatId" name="chatId" value="<%= chatId %>">
+                                <input type="submit" id="chatFriend" class="btn" value="Chat" formaction="/friend/chat">
+                                <input type="submit" id="deleteFriend" class="btn delete" value="Unfriend" formaction="/friend/delete">
+
+                                <% }else if(isRequestSent){ %>
+                                    
+                                    <button id="sended" class="btn sended">Request Sent <span class="dots"><span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span></span></button>
+                                    <input type="submit" id="cancelRequest" class="btn cancel" value="Cancel Request" formaction="/friend/cancel">
+
+                                    <% }else if(isRequestRecieved){ %>
+
+                                        <input type="submit" id="acceptRequest" class="btn" value="Accept Friend Request" formaction="/friend/accept">
+                                        <input type="submit" id="rejectRequest" class="btn reject" value="Reject" formaction="/friend/reject">
+
+                                        <% }else{ %>
+                                        <input type="submit" id="addRequest" class="btn" value="Send Friend Request" formaction="/friend/add">
+                                            <% } %>
+
+
+                                    </form>
+
+
+
+                        <span class="line"></span>
+                        <% } %>
+
+                    <div class="idcopy">
+                        <p class="m-0">ID : <span id="userId"><%= userData.id %></span></p>
+                        <button class="btn btn-dark copyBtn">Copy ID</button>
+                    </div>
+                    
+                </div>
+                <% } %>
+
+
+
+    </div>
+</div>
+        <% if(found){ %>
+            <p class="copiedDone alert alert-success not-visible" id="done"> Copied To Clipboard<i class="fa-solid fa-check"></i></p>
+            <% }else{ %>
+                <% if(searchId){ %>
+                    <input class="ljjmpvbuq657ljsms" type="hidden" value="<%= searchId %>">
+                    <% } %>
+                <% } %>
+
+                
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/sockets/init.js"></script>
+ <% if(connectIo){%>
+         <input type="hidden" id="connectIo" value="<%= connectIo %>" class="disappeared">
+         <script src="/js/sockets/friend.js"></script>
+     <% } %>
+    <%- include("parts/scripts") %>
+
+</body>
+</html>

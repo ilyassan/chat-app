@@ -1,0 +1,58 @@
+
+<%- include("parts/header") %>
+<%- include("parts/sidebar") %>
+
+
+<div class="container text-center">
+
+    <% if(noFriends){ %>
+        <p class="alert alert-danger">You Don't Have Any Friends</p>
+    <% } %>
+    <div id="friendsContainer">
+        
+    </div>
+
+</div>
+<div id="callOverLay" class="callOverLay d-none">
+    <div id="calling" class="actions d-none">
+        <button class="btn sended">Calling <span class="dots"><span class="dot">.</span> <span class="dot">.</span> <span class="dot">.</span></span></button>
+        <button id="cancelCall" class="btn cancel cancelCall text-white">Cancel</button>
+    </div>
+    <div id="noCall" class="no-call actions d-none">
+        <p class="alert m-0">can't call offline user</p>
+        <button id="noCallBtn" class="btn cancel text-white">Back To Chat</button>
+    </div>
+    <div id="permission" class="actions d-none">
+        <p class="alert m-0">give us permission to use the mice</p>
+        <button id="noPermissionBtn" class="btn cancel text-white">Back To Chat</button>
+    </div>
+    <div id="isCalling" class="actions d-none">
+        <p class="alert m-0">ahmed is calling you</p>
+        <button id="answerBtn" class="btn text-white">Answer</button>
+        <button id="declineBtn" class="btn cancel text-white">Decline</button>
+    </div>
+    <div id="answerCall" class="actions d-none">
+        <p class="alert m-0"><i class="fa-solid fa-microphone"></i> <span><span id="minutes">0</span>:<span id="seconds">00</span></span></p>
+        <button id="endCall" class="btn cancel text-white"><i class="fa-solid fa-phone"></i></button>
+    </div>
+    <div id="declineCall" class="actions d-none">
+        <p class="alert m-0">ahmed decline your call </p>
+        <button id="declineMeBtn" class="btn cancel text-white">Back To Chat</button>
+    </div>
+</div>
+
+<audio class="d-none" id="otherUserAudio" controls></audio>
+<input type="hidden" name="friends" value="<%= JSON.stringify(friends) %>">
+
+
+<%- include("parts/scripts") %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+<script src="/js/sockets/init.js"></script>
+<script src="/js/sockets/home.js"></script>
+<script src="/js/sockets/callAll.js"></script>
+<script src="/js/sockets/receiveCall.js"></script>
+
+
+</body>
+</html>

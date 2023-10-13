@@ -1,0 +1,49 @@
+<div class="main-container d-flex justify-content-between">
+  
+  <aside class="sidebar">
+      
+    <h2 class="logo mt-4">CHAT</h2>
+
+    <ul class="links d-flex flex-column mt-5 justify-content-between">
+          
+      <% if(isUser){ %>
+        <% if(Array.isArray(pageTitle)){pageTitle = pageTitle[0]}%>
+        <% if(!Array.isArray(friendRequests)){friendRequests = []}%>
+        <input id="qlbcoqmfbrId" type="hidden" value="<%= isUser %>">
+        <input id="qlmjfncaRequestLength" type="hidden" value="<%= friendRequests.length %>">
+        <div>
+          <li class="<% if(pageTitle == "Friends"){%> active <% } %>">
+            <a href="/friends">Friends<i class="fa-solid fa-comment"></i></a>
+          </li>
+          <li class="<% if(pageTitle == "Groups"){%> active <% } %>">
+            <a href="/groups">Groups<i class="fa-solid fa-comments"></i></a>
+          </li>
+          <li class="<% if(pageTitle == "My Profile"){%> active <% } %>">
+            <a href="/profile">My Profile<i id="profileIcon" class="fa-solid fa-user<% if(friendRequests.length != 0){%> newIcon<% } %>" data-count = "<%=friendRequests.length%>"></i></a>
+          </li>
+          <li class="<% if(pageTitle == "Search"){%> active <% } %>">
+            <a href="/profile/search">Search<i class="fa-solid fa-magnifying-glass"></i></a>
+          </li>
+        </div>
+
+
+      <li class="logout">
+        <a href="/logout">Logout<i class="fa-solid fa-right-from-bracket"></i></a>
+      </li>
+      <% }else{ %>
+      <div>
+        <li class="<% if(pageTitle == "Login"){%> active <% } %>">
+          <a href="/login">Login<i class="fa-solid fa-right-to-bracket"></i></a>
+        </li>
+        <li class="<% if(pageTitle == "Signup"){%> active <% } %>">
+          <a href="/signup">Signup<i class="fa-solid fa-user-plus"></i></a>
+        </li>
+      </div>
+      <% } %>
+
+    </ul>
+
+  </aside>
+
+  <div class="main-content">
+

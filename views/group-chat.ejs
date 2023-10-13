@@ -1,0 +1,104 @@
+
+<%- include("parts/header") %>
+<%- include("parts/sidebar") %>
+
+<div class="chat-container">
+
+    <div class="chat">
+        <div class="chat-header">
+
+            <div class="chat-info">
+                <div class="image"><img src="/<%= group.image %>" alt=""></div>
+                <div class="group-name"><%= group.name %></div>
+            </div>
+
+            <ul class="icons">
+                <span id="searchInChat" class="position-relative"><i class="fa-solid fa-magnifying-glass"></i><div class="d-none"><input type="text"><span id="matchedWords">Matched 0</span></div></span>
+                <span><i class="fa-solid fa-ellipsis"></i></span>
+            </ul>
+
+        </div>
+
+        <div id="chat-messages" class="chat-messages">
+            <% if(messages.length != 0){ %>
+                <% let from; %>
+                <% for(let msg of messages){ %>
+                    <% if(msg.sender == isUser){from = "from-me"}else{from = "from-him"} %>
+
+                    <%     let member = stillAndLeaveMembers.find(member => member._id == msg.sender)
+                    
+                    let date = new Date(Number(msg.timestamp))
+                    let time;
+                    if(new Date().getDate() - 2 > date.getDate() ){
+                        time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+                    }else{
+                        let hours = date.getHours()
+                        let minutes = String(date.getMinutes())
+                        let day = "";
+                        if(date.getDate() == new Date().getDate() - 1){day = "Yesterday "} 
+                        time = `${day}${hours>12?hours%12:hours%24}:${minutes.length == 1?"0"+minutes:minutes} ${hours >= 12?"AM":"PM"}`
+                    }
+                    %>
+
+                            <% if(member._id == isUser) {%>
+                                <div class="message groupMessage <%= from %>" data-time="<%= time %>"><%= msg.content %></div>
+                            <% }else{ %>
+                                <div class="message groupMessage <%= from %>" data-time="<%= time %>" data-name="~<%= member.username %>"><%= msg.content %></div>
+
+                            <% } %>
+                    <% } %>
+                <% }else{ %>
+                    <div class="no-messages">No Messages Between You</div>
+                    <% } %>
+                </div>
+                
+                <div class="send-message">
+                <span class="toDown"><i class="fa-solid fa-arrow-down"></i></span>
+                <input id="message" type="text" placeholder="Send a Message">
+                <button id="send-button" class="btn btn-primary d-flex justify-content-center align-items-center"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+
+    </div>
+
+
+    <div class="information text-center">
+        
+            <div class="information-header">Information</div>
+
+            <div>
+                <div class="mt-2"><img class="info-image" src="/<%= group.image %>" alt=""></div>
+            </div>
+
+            <div class="members mt-5">
+                <div class="friends" id="friends">
+                    <% for(let member of stillMembers){ %>
+                            <a href="/profile/<%= member._id %>" class="w-100">
+                                <div class="friend justify-content-between">
+                                    <div class="main-info">
+                                        <img src="/<%= member.image %>" alt="">
+                                         <h1 class="text-capitalize"><%= member.username %></h1>
+                                     </div>
+                                </div>
+                            </a>
+                         <% } %>     
+                    </div>
+            </div>
+
+            <form action="/group/leave" class="actions m-auto" method="post">
+                <input type="hidden" name="groupId" id="groupId" value="<%= group.id %>">
+                <input type="submit" class="btn leave" value="Leave Group">
+            </form>
+    </div>
+
+    <input type="hidden" id="members" value="<%= JSON.stringify(stillMembers) %>">
+</div>
+
+
+<%- include("parts/scripts") %>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets/init.js"></script>
+<script src="/js/sockets/allChat.js"></script>
+<script src="/js/sockets/groupChat.js"></script>
+
+</body>
+</html>

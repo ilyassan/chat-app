@@ -1,0 +1,15 @@
+
+<%- include("parts/header") %>
+
+<div class="error">
+
+    <p class="alert alert-danger m-auto"><% if(problem){%><%= problem %>
+        <% }else{%>Something Went Wrong<%}%>
+        <a href="/friends">Back To Main Page</a>
+    </p>
+    
+
+
+<%- include("parts/scripts") %>
+</body>
+</html>

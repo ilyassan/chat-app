@@ -1,0 +1,54 @@
+
+<%- include("parts/header") %>
+<%- include("parts/sidebar") %>
+
+
+<div class="container mt-5">
+    <% if(groups.length > 0){ %>
+
+        <div id="groupsContainer" class="groupsContainer">
+            <p class="alert alert-success">Groups</p>
+            <div id="groups" class="groups">
+                
+                <% for(let group of groups){ %>
+                        <div class="user-chat">
+                            <div class="image"><img src="<%= group.image %>" alt=""></div>
+                            <h3 class="text-lowercase"><%= group.name.slice(0,10) %></h3>
+                            <form class="actions" method="post">
+                                <input type="hidden" name="groupData" value="<%= JSON.stringify({id: group._id, name: group.name, image: group.image}) %>">
+                                <input type="hidden" name="groupId" id="groupId" value="<%= group.id %>">
+                                <input type="submit" class="btn" value="Chat" formaction="/group/chat">
+                                <input type="submit" class="btn leave" value="Leave" formaction="/group/leave">
+                            </form>
+                        </div>
+                    <% } %>
+    
+            </div>
+        </div>
+
+        <div class="line my-4"></div>
+    
+        <button class="groupBtn btn btn-primary d-flex justify-content-center align-items-center m-auto mt-5"><a href="/create-group" class="d-flex justify-content-center align-items-center text-white">New Group <i class="fa-solid fa-plus text-white"></i></a></button>
+    
+    
+    
+        <% }else{ %>
+    
+            <div class="no-groups w-100 m-auto">
+                <div class="con text-center m-auto">
+                    <p class="alert alert-danger w-100">
+                        you didn't have entered to any groups
+                    </p>
+                </div>
+                <button class="groupBtn btn btn-primary d-flex justify-content-center align-items-center m-auto mt-4"><a href="/create-group" class="d-flex justify-content-center align-items-center text-white">Create Group <i class="fa-solid fa-plus text-white"></i></a></button>
+            </div>
+    
+            <% } %>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/sockets/init.js"></script>
+<%- include("parts/scripts") %>
+</body>
+</html>
