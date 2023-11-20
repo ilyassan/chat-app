@@ -17,8 +17,7 @@ Chat-App is a real-time chat application built using Node.js and several web tec
 - **Session Management (express-session)**: Middleware for managing user sessions, using cookies for secure session authentication.
 - **EJS**: A templating engine for rendering dynamic content.
 - **CSS and Bootstrap**: Styling and design for the user interface.
-- **WebSocket**: Real-time communication.
-- **WebRTC**: For enabling voice calls.
+- **WebSocket and WebRTC**: Real-time communication and enabling voice calls.
 - **MongoDB**: A NoSQL database for storing chat data.
 
 
