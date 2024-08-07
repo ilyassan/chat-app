@@ -1,6 +1,14 @@
-# Chat-App
+# Chat App
 
-Chat-App is a real-time chat application built using Node.js and several web technologies.
+Chat App is a real-time chat application built using Node.js and several web technologies.
+
+## Why Did I Build This?
+
+I wanted to apply my current knowledge to create an application that allows users to communicate with each other through real-time messages or voice calls.
+
+## Where Did the Idea Come From?
+
+The inspiration for this project came from wondering how applications like WhatsApp work. I decided to build a similar application to explore these concepts.
 
 ## Features
 
